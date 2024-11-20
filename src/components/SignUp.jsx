@@ -2,7 +2,7 @@ export default function Signup() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    const fd = new FormData(event.target);
+    const fd = new FormData(event.target); // to use this FormData you need to apply name attribute for every input fields
     const acquisitionChannel = fd.getAll("acquisition");
     const data = Object.fromEntries(fd.entries());
     data.acquisition = acquisitionChannel;
