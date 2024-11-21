@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 export default function Signup() {
+  const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState(false);
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -6,6 +10,14 @@ export default function Signup() {
     const acquisitionChannel = fd.getAll("acquisition");
     const data = Object.fromEntries(fd.entries());
     data.acquisition = acquisitionChannel;
+
+    if (data.password !== data["confirm-password"]) {
+      // you can access input elements by using their name value here, since here comfirm-password has a dash(-) in it we cant use dot(.) notation. otherwise you can use dot notation to access to that dom element (eg: data.password)
+      setPasswordsAreNotEqual(true);
+
+      return; // here we need to add a return statement to avoid executing further
+    }
+
     console.log(data);
 
     // event.target.reset(); you can use this to reset the form also instead of using a reset button in that form
@@ -41,6 +53,9 @@ export default function Signup() {
             name="confirm-password"
             required
           />
+          <div className="control-error">
+            {passwordsAreNotEqual && <p>Passwords must match.</p>}
+          </div>
         </div>
       </div>
 
